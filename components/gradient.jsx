@@ -9,8 +9,10 @@ const Gradient = () => {
 
   useInterval(() => {
     console.info("Hour changed", hour, minutes, delay, (60 - minutes) * 1000);
-    setHour(new Date().getHours());
-    setMinutes(new Date().getMinutes());
+    const date = new Date();
+    setHour(date.getHours());
+    setMinutes(date.getMinutes());
+    console.log(1);
   }, delay);
 
   React.useEffect(() => {

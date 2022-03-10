@@ -6,12 +6,13 @@ import { EngineProvider } from '../utils/useEngine'
 import '../styles/globals.css'
 
 ReactDOM.render(
+  <>
+  <Helmet defaultTitle='EPTIC - Start Page'/>
   <React.StrictMode>
-    <Helmet defaultTitle='EPTIC - Start Page'/>
-
     <EngineProvider>
       <App />
     </EngineProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
+  </>,
   document.getElementById('root')
 )

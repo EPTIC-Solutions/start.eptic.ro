@@ -82,7 +82,7 @@ const Engines = () => {
             key={`${name} - ${index}`}
             src={src}
             alt={alt}
-            className={isActive(name) ? styles.enginesActive : ""}
+            className={isActive(name) ? styles.enginesActive : null}
             onClick={() => handleActiveChange(name)}
           />
         );
