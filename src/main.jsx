@@ -7,9 +7,7 @@ import '../styles/globals.css'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Helmet defaultTitle='EPTIC - Start Page'>
-      <meta name="description" content="EPTIC default browser start page" />
-    </Helmet>
+    <Helmet defaultTitle='EPTIC - Start Page'/>
 
     <EngineProvider>
       <App />
