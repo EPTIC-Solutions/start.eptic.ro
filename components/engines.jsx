@@ -75,7 +75,7 @@ const Engines = () => {
   }, []);
 
   return (
-    <div className={styles.engines}>
+    <div className={styles.engines + ' overflow-x-auto'}>
       {engines.map(({ name, src, alt }, index) => {
         return (
           <img
