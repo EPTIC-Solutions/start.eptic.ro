@@ -3,6 +3,15 @@ import { useRef, useEffect, useState } from "react";
 const SiteInstructions = () => {
   const instRef = useRef();
   const [showTooltip, setShowTooltip] = useState(false);
+  const [firstTimeHere, setFirstTimeHere] = useState(
+    !localStorage.getItem("firstTimeHere")
+  );
+
+  useEffect(() => {
+    if (!firstTimeHere) {
+      localStorage.setItem("firstTimeHere", "false");
+    }
+  }, [firstTimeHere]);
 
   useEffect(() => {
     if (!instRef.current) return;
@@ -10,6 +19,8 @@ const SiteInstructions = () => {
     const ref = instRef.current;
     const onMouseEnter = () => {
       setShowTooltip(true);
+
+      setFirstTimeHere(false);
     };
     const onMouseLeave = () => {
       setShowTooltip(false);
@@ -29,7 +40,10 @@ const SiteInstructions = () => {
 
   return (
     <div className="fixed right-5 bottom-5 z-50">
-      <button ref={instRef}>
+      <button
+        ref={instRef}
+        className={`${firstTimeHere ? "animate-bounce" : ""}`}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-12 w-12 text-white drop-shadow"
