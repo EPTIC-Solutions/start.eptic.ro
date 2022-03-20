@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDebounce } from "react-use";
 import useLogger from "../utils/useLogger";
 
@@ -11,10 +11,10 @@ import useLogger from "../utils/useLogger";
  * @returns
  */
 function Stars({
-  stars = 50,
+  stars = 300,
   starsSize = 2,
-  starsSpread = 30,
-  debounceDuration = 300,
+  starsSpread = 2,
+  debounceDuration = 100,
 }) {
   const getWindowSize = () => {
     return {
@@ -27,46 +27,15 @@ function Stars({
   const [starsPositions, setStarsPositions] = useState([]);
   const logger = useLogger();
 
-  const [, cancelDebounce] = useDebounce(
-    () => generateStars(),
-    debounceDuration,
-    [windowSize]
-  );
-
   useEffect(() => {
-    const updateWindowSize = () => {
-      setWindowSize(getWindowSize());
-    };
-
-    cancelDebounce();
-    generateStars();
-
-    window.addEventListener("resize", updateWindowSize);
-    return () => {
-      window.removeEventListener("resize", updateWindowSize);
-    };
-  }, []);
-
-  useEffect(() => {
-    logger("Debug stars positions:", starsPositions);
+    logger("Stars positions:", starsPositions);
   }, [starsPositions]);
-
-  const generateStars = () => {
-    logger("Debug window:", windowSize);
-    const newPositions = [];
-
-    for (let i = 0; i < stars; i++) {
-      newPositions.push(calculateStarPosition(newPositions));
-    }
-
-    setStarsPositions(newPositions);
-  };
 
   const calculateStarPosition = (prevState, recursionCheck = 1) => {
     const positions = {
       x: Math.floor(Math.random() * windowSize.x),
       y: Math.floor(Math.random() * windowSize.y),
-      opacity: Math.floor(Math.random() * 60 + 20),
+      opacity: Math.floor(Math.random() * 20 + 20),
     };
 
     const isValidPosition = checkStarPosition(positions, prevState);
@@ -99,8 +68,39 @@ function Stars({
     return true;
   };
 
+  const generateStars = useCallback(() => {
+    logger("Window:", windowSize);
+    const newPositions = [];
+
+    for (let i = 0; i < stars; i++) {
+      newPositions.push(calculateStarPosition(newPositions));
+    }
+
+    setStarsPositions(newPositions);
+  }, [windowSize]);
+
+  const [, cancelDebounce] = useDebounce(
+    () => generateStars(),
+    debounceDuration,
+    [windowSize]
+  );
+
+  useEffect(() => {
+    const updateWindowSize = () => {
+      setWindowSize(getWindowSize());
+    };
+
+    cancelDebounce();
+    generateStars();
+
+    window.addEventListener("resize", updateWindowSize);
+    return () => {
+      window.removeEventListener("resize", updateWindowSize);
+    };
+  }, []);
+
   return (
-    <>
+    <div id="stars">
       {starsPositions.map((position, index) => (
         <div
           className={`rounded-full fixed bg-white`}
@@ -114,7 +114,7 @@ function Stars({
           key={index}
         ></div>
       ))}
-    </>
+    </div>
   );
 }
 

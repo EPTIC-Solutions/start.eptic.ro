@@ -87,7 +87,7 @@ const Engines = () => {
     <div
       className={
         styles.engines +
-        " snap-x overflow-x-auto justify-start sm:justify-around"
+        " snap-x overflow-x-auto justify-start sm:justify-center"
       }
     >
       {engines.map(({ name, src, alt }, index) => {

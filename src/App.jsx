@@ -42,6 +42,7 @@ const App = () => {
               onChange={(e) => setInput(e.target.value)}
               placeholder={`Search ${engines[active].name}`}
               autoComplete="off"
+              className="text-4xl sm:text-6xl"
             />
           </div>
         </form>
