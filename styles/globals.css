@@ -8,6 +8,10 @@
   text-decoration: none;
 }
 
+.shadow-please {
+  filter: drop-shadow(1px 1px 0px #bf616a);
+}
+
 input::placeholder {
   color: #fafafa;
   text-shadow: none;

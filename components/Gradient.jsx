@@ -3,55 +3,35 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Stars from "./Stars";
 import useLogger from "../utils/useLogger";
+import styles from "../styles/Gradients.module.css";
 
 const Gradient = () => {
-  const [hour, setHour] = useState();
-  const [minutes, setMinutes] = useState();
+  const getTime = () => {
+    const date = new Date();
+    return {
+      hour: date.getHours(),
+      minutes: date.getMinutes(),
+      seconds: date.getSeconds(),
+    };
+  };
+  const [time, setTime] = useState(getTime());
   const [delay, setDelay] = useState(5);
   const logger = useLogger();
 
   useInterval(() => {
-    logger("Debug: Hour changed. Old hour:", hour, "Old minutes:", minutes);
-    setHour(new Date().getHours());
-    setMinutes(new Date().getMinutes());
+    logger("New time", time);
+    setTime(getTime());
   }, delay);
 
   useEffect(() => {
-    setDelay((60 - minutes) * 60 * 1000);
-  }, [minutes]);
-
-  /**
-   * Evening
-   */
-  if (hour > 11 && hour < 18) {
-    return (
-      <div className="absolute inset-0 bg-gradient-to-b from-sky-700 to-sky-200"></div>
-    );
-  }
-
-  /**
-   * Night
-   */
-  if ((hour >= 0 && hour < 5) || (hour > 21 && hour < 24)) {
-    return (
-      <>
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-sky-900"></div>
-        <Stars />
-      </>
-    );
-  }
-
-  /**
-   * Sunrise
-   */
-  if (hour >= 5 && hour <= 7) {
-    return (
-      <div className="absolute inset-0 bg-gradient-to-b from-sky-800/70 via-orange-300/40 to-orange-300"></div>
-    );
-  }
+    setDelay(((60 - time.minutes) * 60 - time.seconds) * 1000);
+  }, [time]);
 
   return (
-    <div className="absolute inset-0 bg-gradient-to-b from-sky-800 to-orange-100"></div>
+    <>
+      <div className={`${styles["hour-" + time.hour]} absolute inset-0`}></div>
+      {(time.hour >= 23 || time.hour < 5) && <Stars />}
+    </>
   );
 };
 

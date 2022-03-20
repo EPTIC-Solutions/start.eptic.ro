@@ -6,7 +6,7 @@ import Gradient from "../components/Gradient";
 import SiteInstructions from "../components/SiteInstructions";
 
 const App = () => {
-  const { active, doSearch, clearInput, setClearInput } = useEngine();
+  const { active, engines, doSearch, clearInput, setClearInput } = useEngine();
   const [input, setInput] = useState("");
   const inputRef = useRef();
 
@@ -40,7 +40,7 @@ const App = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder={`Search ${active.name}`}
+              placeholder={`Search ${engines[active].name}`}
               autoComplete="off"
             />
           </div>

@@ -3,8 +3,7 @@ import { useEffect } from "react";
 import styles from "../styles/Home.module.css";
 
 const Engines = () => {
-  const { engines, isActive, setActive, handleActiveChange, setClearInput } =
-    useEngine();
+  const { engines, isActive, setActive, setClearInput } = useEngine();
 
   const getOperatingSystem = () => {
     let operatingSystem = "Not known";
@@ -43,8 +42,8 @@ const Engines = () => {
   };
 
   const getControlKey = () => {
-    if (getOperatingSystem() === "Windows OS") return "Alt";
-    return "Control";
+    // if (getOperatingSystem() === "Windows OS") return "Alt";
+    return "Alt";
   };
 
   useEffect(() => {
@@ -59,10 +58,13 @@ const Engines = () => {
         try {
           const keyInt = parseInt(event.key);
           if (keyInt > 0 && keyInt <= 9) {
-            setActive(engines[keyInt - 1]);
+            setActive(keyInt - 1);
           } else if (event.key === "c") {
             setClearInput(true);
+          } else {
+            return;
           }
+          event.preventDefault();
         } catch {}
       }
     };
@@ -90,7 +92,7 @@ const Engines = () => {
             src={src}
             alt={alt}
             className={isActive(name) ? styles.enginesActive : null}
-            onClick={() => handleActiveChange(name)}
+            onClick={() => setActive(index)}
           />
         );
       })}

@@ -51,24 +51,24 @@ const useProvideEngine = () => {
     },
   ];
 
-  const [active, setActive] = useState(engines[0]);
+  const [active, setActive] = useState(0);
   const [clearInput, setClearInput] = useState(false);
 
   const isActive = (name) => {
-    return name === active.name;
+    return name === engines[active].name;
   };
 
-  const handleActiveChange = (name) => {
-    setActive(engines.find((e) => e.name === name));
+  const handleActiveChange = (index) => {
+    setActive(index);
   };
 
   const doSearch = (search) => {
     // TODO: Implement different places
     let url = "";
     if (!search) {
-      url = active.base;
+      url = engines[active].base;
     } else {
-      url = active.places[0].href.replace("%query%", search);
+      url = engines[active].places[0].href.replace("%query%", search);
     }
     window.location.href = url;
   };
@@ -79,7 +79,6 @@ const useProvideEngine = () => {
     active,
     setActive,
     doSearch,
-    handleActiveChange,
     clearInput,
     setClearInput,
   };

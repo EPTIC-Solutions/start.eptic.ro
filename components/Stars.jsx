@@ -66,6 +66,7 @@ function Stars({
     const positions = {
       x: Math.floor(Math.random() * windowSize.x),
       y: Math.floor(Math.random() * windowSize.y),
+      opacity: Math.floor(Math.random() * 60 + 20),
     };
 
     const isValidPosition = checkStarPosition(positions, prevState);
@@ -102,14 +103,13 @@ function Stars({
     <>
       {starsPositions.map((position, index) => (
         <div
-          className={`rounded-full fixed ${
-            !position.close ? "bg-white/50" : "bg-red-500"
-          }`}
+          className={`rounded-full fixed bg-white`}
           style={{
             top: position.y,
             left: position.x,
             width: starsSize,
             height: starsSize,
+            opacity: position.opacity / 100,
           }}
           key={index}
         ></div>

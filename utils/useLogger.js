@@ -6,7 +6,7 @@ const useLogger = () => {
       process.env.NODE_ENV === "development" ||
       urlSearchParams.has("debugOnprod")
     ) {
-      console.log(message, ...optionalDetails);
+      console.log(`Debug: ${message}`, ...optionalDetails);
     }
   };
   return logger;
