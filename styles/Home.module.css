@@ -1,8 +1,8 @@
 .engines {
   display: flex;
-  justify-content: center;
   align-items: center;
   height: 200px;
+  padding: 0px 40px;
 }
 
 .engines .enginesActive {

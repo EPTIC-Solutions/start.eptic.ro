@@ -84,14 +84,21 @@ const Engines = () => {
   }, []);
 
   return (
-    <div className={styles.engines + " overflow-x-auto"}>
+    <div
+      className={
+        styles.engines +
+        " snap-x overflow-x-auto justify-start sm:justify-around"
+      }
+    >
       {engines.map(({ name, src, alt }, index) => {
         return (
           <img
             key={`${name} - ${index}`}
             src={src}
             alt={alt}
-            className={isActive(name) ? styles.enginesActive : null}
+            className={`${
+              isActive(name) ? styles.enginesActive : null
+            } snap-center`}
             onClick={() => setActive(index)}
           />
         );
