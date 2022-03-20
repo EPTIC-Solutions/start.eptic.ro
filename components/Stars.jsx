@@ -12,8 +12,8 @@ import useLogger from "../utils/useLogger";
  */
 function Stars({
   stars = 300,
-  starsSize = 2,
-  starsSpread = 2,
+  starsSize = 1,
+  starsSpread = 10,
   debounceDuration = 100,
 }) {
   const getWindowSize = () => {
