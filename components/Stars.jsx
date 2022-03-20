@@ -103,12 +103,10 @@ function Stars({
     <div id="stars">
       {starsPositions.map((position, index) => (
         <div
-          className={`rounded-full fixed bg-white`}
+          className={`rounded-full fixed bg-white h-[1px] w-[1px] sm:h-[${starsSize}px] sm:w-[${starsSize}px]`}
           style={{
             top: position.y,
             left: position.x,
-            width: starsSize,
-            height: starsSize,
             opacity: position.opacity / 100,
           }}
           key={index}
