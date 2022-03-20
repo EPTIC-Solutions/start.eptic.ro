@@ -21,7 +21,7 @@ const App = () => {
   }, [clearInput, setClearInput]);
 
   return (
-    <div>
+    <main className="relative h-full">
       <SiteInstructions />
       <Gradient />
       <Engines />
@@ -45,19 +45,19 @@ const App = () => {
             />
           </div>
         </form>
-
-        <div
-          style={{
-            position: "fixed",
-            bottom: 100,
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          <img src={Logo} alt="EPTIC Logo" width="300px" height="100px" />
-        </div>
       </div>
-    </div>
+      <div
+        style={{
+          position: "absolute",
+          bottom: "2rem",
+          left: "2rem",
+          opacity: 0.2,
+          width: 100,
+        }}
+      >
+        <img src={Logo} alt="EPTIC Logo" width="300px" height="100px" />
+      </div>
+    </main>
   );
 };
 

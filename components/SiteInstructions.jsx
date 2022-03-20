@@ -39,7 +39,7 @@ const SiteInstructions = () => {
   }, [instRef]);
 
   return (
-    <div className="fixed right-5 bottom-5 z-50">
+    <div className="absolute right-5 bottom-5 z-50">
       <button
         ref={instRef}
         className={`${firstTimeHere ? "animate-bounce" : ""}`}
