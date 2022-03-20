@@ -1,14 +1,17 @@
 import { useEngine } from "../utils/useEngine";
 import { useEffect } from "react";
-import styles from '../styles/Home.module.css'
+import styles from "../styles/Home.module.css";
 
 const Engines = () => {
-  const { engines, isActive, setActive, handleActiveChange } = useEngine();
-  let checkInput = false;
+  const { engines, isActive, setActive, handleActiveChange, setClearInput } =
+    useEngine();
 
   const getOperatingSystem = () => {
     let operatingSystem = "Not known";
-    if (navigator.userAgentData.platform === undefined) {
+    if (
+      typeof navigator.userAgentData === "undefined" ||
+      typeof navigator.userAgentData.platform === "undefined"
+    ) {
       if (navigator.platform.indexOf("Win") !== -1) {
         operatingSystem = "Windows OS";
       }
@@ -44,28 +47,32 @@ const Engines = () => {
     return "Control";
   };
 
-  const handleKeyDown = (event) => {
-    // Control
-    if (event.key === getControlKey()) {
-      checkInput = true;
-    }
-    if (checkInput) {
-      try {
-        const keyInt = parseInt(event.key);
-        if (keyInt > 0 && keyInt <= 9) {
-          setActive(engines[keyInt - 1]);
-        }
-      } catch {}
-    }
-  };
-
-  const handleKeyUp = (event) => {
-    if (event.key === getControlKey()) {
-      checkInput = false;
-    }
-  };
-
   useEffect(() => {
+    let checkInput = false;
+
+    const handleKeyDown = (event) => {
+      // Control
+      if (event.key === getControlKey()) {
+        checkInput = true;
+      }
+      if (checkInput) {
+        try {
+          const keyInt = parseInt(event.key);
+          if (keyInt > 0 && keyInt <= 9) {
+            setActive(engines[keyInt - 1]);
+          } else if (event.key === "c") {
+            setClearInput(true);
+          }
+        } catch {}
+      }
+    };
+
+    const handleKeyUp = (event) => {
+      if (event.key === getControlKey()) {
+        checkInput = false;
+      }
+    };
+
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
     return () => {
@@ -75,7 +82,7 @@ const Engines = () => {
   }, []);
 
   return (
-    <div className={styles.engines + ' overflow-x-auto'}>
+    <div className={styles.engines + " overflow-x-auto"}>
       {engines.map(({ name, src, alt }, index) => {
         return (
           <img

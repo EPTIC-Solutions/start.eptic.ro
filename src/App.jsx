@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import Engines from "../components/engines";
+import Engines from "../components/Engines";
 import { useEngine } from "../utils/useEngine";
 import Logo from "/logo.svg";
-import Gradient from "../components/gradient";
+import Gradient from "../components/Gradient";
+import SiteInstructions from "../components/SiteInstructions";
 
 const App = () => {
-  const { active, doSearch } = useEngine();
+  const { active, doSearch, clearInput, setClearInput } = useEngine();
   const [input, setInput] = useState("");
   const inputRef = useRef();
 
@@ -13,8 +14,15 @@ const App = () => {
     inputRef.current.focus();
   }, [active]);
 
+  useEffect(() => {
+    if (!clearInput) return;
+    setInput("");
+    setClearInput(false);
+  }, [clearInput, setClearInput]);
+
   return (
     <div>
+      <SiteInstructions />
       <Gradient />
       <Engines />
       <div id="container">
@@ -51,6 +59,6 @@ const App = () => {
       </div>
     </div>
   );
-}
+};
 
 export default App;

@@ -5,9 +5,13 @@
   height: 200px;
 }
 
-.enginesActive {
+.engines .enginesActive {
   opacity: 1;
-  filter: drop-shadow(4px 1px 1px #bf616a);
+  filter: drop-shadow(2px 2px 0px #bf616a);
+}
+
+.engines img {
+  filter: drop-shadow(1px 1px 0px #bf616a);
 }
 
 .engines img:not(.enginesActive) {

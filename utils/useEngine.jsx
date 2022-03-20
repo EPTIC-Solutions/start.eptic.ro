@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
-import Google from '/engines/google.png'
-import Youtube from '/engines/youtube.png'
+import GoogleImage from "/engines/google.png";
+import YoutubeImage from "/engines/youtube.png";
 
 const engineContext = createContext();
 
@@ -19,7 +19,7 @@ const useProvideEngine = () => {
   const engines = [
     {
       name: "Google",
-      src: Google,
+      src: GoogleImage,
       alt: "Google Logo",
       base: "https://google.com/",
       places: [
@@ -39,7 +39,7 @@ const useProvideEngine = () => {
     },
     {
       name: "Youtube",
-      src: Youtube,
+      src: YoutubeImage,
       alt: "Youtube Logo",
       base: "https://youtube.com/",
       places: [
@@ -52,6 +52,7 @@ const useProvideEngine = () => {
   ];
 
   const [active, setActive] = useState(engines[0]);
+  const [clearInput, setClearInput] = useState(false);
 
   const isActive = (name) => {
     return name === active.name;
@@ -79,5 +80,7 @@ const useProvideEngine = () => {
     setActive,
     doSearch,
     handleActiveChange,
+    clearInput,
+    setClearInput,
   };
 };

@@ -11,6 +11,7 @@
 input::placeholder {
   color: #fafafa;
   text-shadow: none;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.125);
 }
 
 body {
