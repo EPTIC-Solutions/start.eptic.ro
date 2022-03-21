@@ -11,11 +11,13 @@ import useLogger from "../utils/useLogger";
  * @returns
  */
 function Stars({
-  stars = 300,
-  starsSize = 2,
-  starsSpread = 5,
+  stars = 1000,
+  starsSizeInitial = 1,
+  starsSpread = 1,
   debounceDuration = 100,
 }) {
+  const [starsSize, setStarsSize] = useState(starsSizeInitial);
+
   const getWindowSize = () => {
     return {
       x: window.innerWidth - starsSize,
@@ -25,17 +27,14 @@ function Stars({
 
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [starsPositions, setStarsPositions] = useState([]);
-  const logger = useLogger();
 
-  useEffect(() => {
-    logger("Stars positions:", starsPositions);
-  }, [starsPositions]);
+  const logger = useLogger();
 
   const calculateStarPosition = (prevState, recursionCheck = 1) => {
     const positions = {
-      x: Math.floor(Math.random() * windowSize.x),
-      y: Math.floor(Math.random() * windowSize.y),
-      opacity: Math.floor(Math.random() * 20 + 20),
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      opacity: Math.floor(Math.random() * 40 + 10),
     };
 
     const isValidPosition = checkStarPosition(positions, prevState);
@@ -60,7 +59,7 @@ function Stars({
       if (
         Math.abs(positions.x - stars[i].x) +
           Math.abs(positions.y - stars[i].y) <
-        starsSpread * 2
+        (starsSpread * 2) / 10
       ) {
         return false;
       }
@@ -69,18 +68,45 @@ function Stars({
   };
 
   const generateStars = useCallback(() => {
-    logger("Window:", windowSize);
-    const newPositions = [];
-
-    for (let i = 0; i < stars; i++) {
-      newPositions.push(calculateStarPosition(newPositions));
+    if (localStorage.stars) {
+      const starsData = JSON.parse(localStorage.stars);
+      const date1 = new Date(starsData.added);
+      const date2 = new Date();
+      const diffTime = Math.abs(date2 - date1);
+      const minutesDiff = Math.ceil(diffTime / (1000 * 60));
+      if (minutesDiff < 5) {
+        setStarsPositions(starsData.stars);
+        logger("Stars positions:", starsData.stars);
+        logger("Stars loaded from local storage");
+        return;
+      }
     }
 
+    const newPositions = [];
+
+    try {
+      for (let i = 0; i < stars; i++) {
+        newPositions.push(calculateStarPosition(newPositions));
+      }
+    } catch {}
+
+    localStorage.stars = JSON.stringify({
+      stars: newPositions,
+      added: new Date().getTime(),
+    });
+
+    logger("Stars positions:", newPositions);
     setStarsPositions(newPositions);
-  }, [windowSize]);
+  }, [stars, starsSpread]);
 
   const [, cancelDebounce] = useDebounce(
-    () => generateStars(),
+    () => {
+      if (windowSize.x <= 640) {
+        setStarsSize(1);
+      } else if (starsSize !== starsSizeInitial) {
+        setStarsSize(starsSizeInitial);
+      }
+    },
     debounceDuration,
     [windowSize]
   );
@@ -90,7 +116,6 @@ function Stars({
       setWindowSize(getWindowSize());
     };
 
-    cancelDebounce();
     generateStars();
 
     window.addEventListener("resize", updateWindowSize);
@@ -103,11 +128,13 @@ function Stars({
     <div id="stars">
       {starsPositions.map((position, index) => (
         <div
-          className={`rounded-full fixed bg-white h-[1px] w-[1px] sm:h-[${starsSize}px] sm:w-[${starsSize}px]`}
+          className={`rounded-full fixed bg-white`}
           style={{
-            top: position.y,
-            left: position.x,
+            top: `${position.y}%`,
+            left: `${position.x}%`,
             opacity: position.opacity / 100,
+            width: starsSize,
+            height: starsSize,
           }}
           key={index}
         ></div>
