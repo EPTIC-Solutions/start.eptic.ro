@@ -30,7 +30,7 @@ const Gradient = () => {
   return (
     <>
       <div className={`${styles["hour-" + time.hour]} absolute inset-0`}></div>
-      {(time.hour >= 23 || time.hour < 5) && <Stars />}
+      {(time.hour >= 22 || time.hour <= 5) && <Stars />}
     </>
   );
 };
