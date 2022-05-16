@@ -17,7 +17,7 @@ const Engines = () => {
       try {
         if (!event.altKey) return;
         const keyInt = parseInt(event.key);
-        if (keyInt > 0 && keyInt <= 9) {
+        if (keyInt > 0 && keyInt <= 9 && engines.length <= keyInt) {
           setActive(keyInt - 1);
         } else if (event.key === "c") {
           setClearInput(true);
