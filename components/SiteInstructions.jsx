@@ -1,7 +1,6 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const SiteInstructions = () => {
-  const instRef = useRef();
   const [showTooltip, setShowTooltip] = useState(false);
   const [firstTimeHere, setFirstTimeHere] = useState(
     !localStorage.getItem("firstTimeHere")
@@ -13,36 +12,24 @@ const SiteInstructions = () => {
     }
   }, [firstTimeHere]);
 
-  useEffect(() => {
-    if (!instRef.current) return;
+  const onMouseEnter = () => {
+    setShowTooltip(true);
 
-    const ref = instRef.current;
-    const onMouseEnter = () => {
-      setShowTooltip(true);
+    setFirstTimeHere(false);
+  };
 
-      setFirstTimeHere(false);
-    };
-    const onMouseLeave = () => {
-      setShowTooltip(false);
-    };
-    ref.addEventListener("mouseenter", onMouseEnter);
-    ref.addEventListener("mouseleave", onMouseLeave);
-    ref.addEventListener("focus", onMouseEnter);
-    ref.addEventListener("blur", onMouseLeave);
-
-    return () => {
-      ref.removeEventListener("mouseenter", onMouseEnter);
-      ref.removeEventListener("mouseleave", onMouseLeave);
-      ref.removeEventListener("focus", onMouseEnter);
-      ref.removeEventListener("blur", onMouseLeave);
-    };
-  }, [instRef]);
+  const onMouseLeave = () => {
+    setShowTooltip(false);
+  };
 
   return (
     <div className="absolute right-5 bottom-5 z-50">
       <button
-        ref={instRef}
         className={`${firstTimeHere ? "animate-bounce" : ""}`}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onFocus={onMouseEnter}
+        onBlur={onMouseLeave}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

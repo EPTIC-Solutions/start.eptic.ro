@@ -15,7 +15,7 @@ const Gradient = () => {
     };
   };
   const [time, setTime] = useState(getTime());
-  const [delay, setDelay] = useState(5);
+  const [delay, setDelay] = useState(0);
   const logger = useLogger();
 
   useInterval(() => {

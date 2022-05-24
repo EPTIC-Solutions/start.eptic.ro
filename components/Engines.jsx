@@ -1,16 +1,9 @@
 import { useEngine } from "../utils/useEngine";
 import { useEffect } from "react";
 import styles from "../styles/Home.module.css";
-// import useOS from "../utils/useOS";
 
 const Engines = () => {
   const { engines, isActive, setActive, setClearInput } = useEngine();
-  // const operatingSystem = useOS();
-
-  const getControlKey = () => {
-    // if (operatingSystem === "Windows") return "Alt";
-    return "Alt";
-  };
 
   useEffect(() => {
     const handleKeyDown = (event) => {

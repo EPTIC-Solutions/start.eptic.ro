@@ -31,13 +31,13 @@ function Stars({
   const logger = useLogger();
 
   const calculateStarPosition = (prevState, recursionCheck = 1) => {
-    const positions = {
+    const position = {
       x: Math.random() * 100,
       y: Math.random() * 100,
       opacity: Math.floor(Math.random() * 40 + 10),
     };
 
-    const isValidPosition = checkStarPosition(positions, prevState);
+    const isValidPosition = checkStarPosition(position, prevState);
 
     if (!isValidPosition) {
       if (recursionCheck === 10) {
@@ -48,17 +48,16 @@ function Stars({
       return calculateStarPosition(prevState, ++recursionCheck);
     }
 
-    return positions;
+    return position;
   };
 
-  const checkStarPosition = (positions, stars) => {
+  const checkStarPosition = (position, stars) => {
     for (let i = 0; i < stars.length; i++) {
       /**
-       * Find out if the new positions are too close to a star already on the sky
+       * Find out if the new position is too close to a star already on the sky
        */
       if (
-        Math.abs(positions.x - stars[i].x) +
-          Math.abs(positions.y - stars[i].y) <
+        Math.abs(position.x - stars[i].x) + Math.abs(position.y - stars[i].y) <
         (starsSpread * 2) / 10
       ) {
         return false;
@@ -121,6 +120,7 @@ function Stars({
     window.addEventListener("resize", updateWindowSize);
     return () => {
       window.removeEventListener("resize", updateWindowSize);
+      cancelDebounce();
     };
   }, []);
 
@@ -133,8 +133,8 @@ function Stars({
             top: `${position.y}%`,
             left: `${position.x}%`,
             opacity: position.opacity / 100,
-            width: starsSize,
-            height: starsSize,
+            width: `${starsSize}px`,
+            height: `${starsSize}px`,
           }}
           key={index}
         ></div>
