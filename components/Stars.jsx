@@ -11,7 +11,7 @@ import useLogger from "../utils/useLogger";
  * @returns
  */
 function Stars({
-  stars = 1000,
+  stars = 2500,
   starsSizeInitial = 1,
   starsSpread = 1,
   debounceDuration = 100,
@@ -34,7 +34,7 @@ function Stars({
     const position = {
       x: Math.random() * 100,
       y: Math.random() * 100,
-      opacity: Math.floor(Math.random() * 40 + 10),
+      opacity: Math.floor(Math.random() * 35 + 5),
     };
 
     const isValidPosition = checkStarPosition(position, prevState);
@@ -73,7 +73,7 @@ function Stars({
       const date2 = new Date();
       const diffTime = Math.abs(date2 - date1);
       const minutesDiff = Math.ceil(diffTime / (1000 * 60));
-      if (minutesDiff < 5) {
+      if (starsData.stars.length == stars && minutesDiff < 5) {
         setStarsPositions(starsData.stars);
         logger("Stars positions:", starsData.stars);
         logger("Stars loaded from local storage");
@@ -84,8 +84,22 @@ function Stars({
     const newPositions = [];
 
     try {
+      if (
+        typeof window === "undefined" ||
+        process.env.NODE_ENV === "development" ||
+        urlSearchParams.has("debugOnprod")
+      ) {
+        console.time("Calculate star positions");
+      }
       for (let i = 0; i < stars; i++) {
-        newPositions.push(calculateStarPosition(newPositions));
+        newPositions.push(calculateStarPosition(stars));
+      }
+      if (
+        typeof window === "undefined" ||
+        process.env.NODE_ENV === "development" ||
+        urlSearchParams.has("debugOnprod")
+      ) {
+        console.timeEnd("Calculate star positions");
       }
     } catch {}
 
