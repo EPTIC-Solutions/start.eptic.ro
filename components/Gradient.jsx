@@ -9,9 +9,9 @@ const Gradient = () => {
   const getTime = () => {
     const date = new Date();
     return {
-      hour: 2 ?? date.getHours(),
-      minutes: 10 ?? date.getMinutes(),
-      seconds: 1 ?? date.getSeconds(),
+      hour: date.getHours(),
+      minutes: date.getMinutes(),
+      seconds: date.getSeconds(),
     };
   };
   const [time, setTime] = useState(getTime());
