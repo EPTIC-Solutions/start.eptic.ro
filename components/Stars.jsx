@@ -1,31 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
-import { useDebounce } from "react-use";
 import useLogger from "../utils/useLogger";
 
 /**
  *
  * @param {number} stars The number of stars to show on the screen
- * @param {number} starsSize Stars size, in pixels
  * @param {number} starsSpread The minimum amount of pixels between each star
  * @param {number} debounceDuration The duration between stars re-renders on window resize
  * @returns
  */
-function Stars({
-  stars = 2500,
-  starsSizeInitial = 1,
-  starsSpread = 1,
-  debounceDuration = 100,
-}) {
-  const [starsSize, setStarsSize] = useState(starsSizeInitial);
-
-  const getWindowSize = () => {
-    return {
-      x: window.innerWidth - starsSize,
-      y: window.innerHeight - starsSize,
-    };
-  };
-
-  const [windowSize, setWindowSize] = useState(getWindowSize());
+function Stars({ stars = 2500, starsSpread = 1, debounceDuration = 100 }) {
   const [starsPositions, setStarsPositions] = useState([]);
 
   const logger = useLogger();
@@ -34,7 +17,8 @@ function Stars({
     const position = {
       x: Math.random() * 100,
       y: Math.random() * 100,
-      opacity: Math.floor(Math.random() * 35 + 5),
+      opacity: Math.floor(Math.random() * 25 + 5),
+      size: Math.random() * 2,
     };
 
     const isValidPosition = checkStarPosition(position, prevState);
@@ -112,30 +96,8 @@ function Stars({
     setStarsPositions(newPositions);
   }, [stars, starsSpread]);
 
-  const [, cancelDebounce] = useDebounce(
-    () => {
-      if (windowSize.x <= 640) {
-        setStarsSize(1);
-      } else if (starsSize !== starsSizeInitial) {
-        setStarsSize(starsSizeInitial);
-      }
-    },
-    debounceDuration,
-    [windowSize]
-  );
-
   useEffect(() => {
-    const updateWindowSize = () => {
-      setWindowSize(getWindowSize());
-    };
-
     generateStars();
-
-    window.addEventListener("resize", updateWindowSize);
-    return () => {
-      window.removeEventListener("resize", updateWindowSize);
-      cancelDebounce();
-    };
   }, []);
 
   return (
@@ -147,8 +109,8 @@ function Stars({
             top: `${position.y}%`,
             left: `${position.x}%`,
             opacity: position.opacity / 100,
-            width: `${starsSize}px`,
-            height: `${starsSize}px`,
+            width: `${position.size}px`,
+            height: `${position.size}px`,
           }}
           key={index}
         ></div>
