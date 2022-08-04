@@ -26,7 +26,7 @@ function Stars({ stars = 2500, starsSpread = 1, debounceDuration = 100 }) {
     if (!isValidPosition) {
       if (recursionCheck === 10) {
         throw new Error(
-          "Too many recursions, please make sure the spread is small enough for 50 stars to fit into the window"
+          `Too many recursions, please make sure the spread is small enough for ${stars} stars to fit into the window`
         );
       }
       return calculateStarPosition(prevState, ++recursionCheck);
