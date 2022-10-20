@@ -1,6 +1,7 @@
 import { useEngine } from "../utils/useEngine";
 import { useEffect } from "react";
 import styles from "../styles/Home.module.css";
+import isMac from "../utils/isMac";
 
 const Engines = () => {
   const { engines, isActive, setActive, setClearInput } = useEngine();
@@ -8,7 +9,7 @@ const Engines = () => {
   useEffect(() => {
     const handleKeyDown = (event) => {
       try {
-        if (!event.altKey) return;
+        if ((isMac() && !event.metaKey) || (!isMac() && !event.altKey)) return;
 
         const keyInt = parseInt(event.key);
 
