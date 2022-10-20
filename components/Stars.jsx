@@ -8,7 +8,7 @@ import useLogger from "../utils/useLogger";
  * @param {number} debounceDuration The duration between stars re-renders on window resize
  * @returns
  */
-function Stars({ stars = 1000, starsSpread = 1, debounceDuration = 100 }) {
+function Stars({ stars = 2500, starsSpread = 1, debounceDuration = 100 }) {
   const [starsPositions, setStarsPositions] = useState([]);
 
   const logger = useLogger();
