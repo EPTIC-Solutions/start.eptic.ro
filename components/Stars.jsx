@@ -51,6 +51,7 @@ function Stars({ stars = 1000, starsSpread = 1, debounceDuration = 100 }) {
   };
 
   const generateStars = useCallback(() => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
     if (localStorage.stars) {
       const starsData = JSON.parse(localStorage.stars);
       const date1 = new Date(starsData.added);
