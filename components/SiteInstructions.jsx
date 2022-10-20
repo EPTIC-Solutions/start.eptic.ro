@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import isMac from "../utils/isMac";
 
 const SiteInstructions = () => {
   const [showTooltip, setShowTooltip] = useState(false);
@@ -23,7 +24,7 @@ const SiteInstructions = () => {
   };
 
   return (
-    <div className="absolute right-5 bottom-5 z-50">
+    <div className="absolute z-50 right-5 bottom-5">
       <button
         className={`${firstTimeHere ? "animate-bounce" : ""}`}
         onMouseEnter={onMouseEnter}
@@ -33,7 +34,7 @@ const SiteInstructions = () => {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-12 w-12 text-white drop-shadow"
+          className="w-12 h-12 text-white drop-shadow"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -47,16 +48,15 @@ const SiteInstructions = () => {
         </svg>
       </button>
       {showTooltip && (
-        <div className="absolute origin-bottom-right bottom-16 right-0 bg-white rounded-lg shadow-lg p-4 w-80 prose">
+        <div className="absolute right-0 p-4 prose origin-bottom-right bg-white rounded-lg shadow-lg bottom-16 w-80">
           <h3>Site Instructions</h3>
           <h4>Shortcuts</h4>
           <ul>
             <li>
-              <code>ALT+[1-9]</code> to switch between engines
+              <code>{isMac() ? "⌘" : "ALT+"}[1-9]</code> to switch between
+              engines
             </li>
-            <li>
-              <code>ALT+C</code> to clear the search input
-            </li>
+            <li>{isMac() ? "⌘" : "ALT+"}C to clear the search input</li>
           </ul>
         </div>
       )}
