@@ -56,7 +56,9 @@ const SiteInstructions = () => {
               <code>{isMac() ? "⌘" : "ALT+"}[1-9]</code> to switch between
               engines
             </li>
-            <li>{isMac() ? "⌘" : "ALT+"}C to clear the search input</li>
+            <li>
+              <code>{isMac() ? "⌘" : "ALT+"}C</code> to clear the search input
+            </li>
           </ul>
         </div>
       )}
