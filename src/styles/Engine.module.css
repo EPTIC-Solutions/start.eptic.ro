@@ -1,0 +1,23 @@
+.engines {
+    display: flex;
+    align-items: center;
+    height: 200px;
+    padding: 0px 40px;
+}
+
+.engines .engineActive {
+    opacity: 1;
+    filter: drop-shadow(2px 2px 0px #bf616a);
+}
+
+.engines img {
+    filter: drop-shadow(1px 1px 0px #bf616a);
+}
+
+.engines img:not(.engineActive) {
+    opacity: 0.3;
+}
+
+.engines img.engineActive:hover {
+    opacity: 1;
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import isMac from "../utils/isMac";
 
-const SiteInstructions = () => {
+const Instructions = () => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [firstTimeHere, setFirstTimeHere] = useState(
     !localStorage.getItem("firstTimeHere")
@@ -66,4 +66,4 @@ const SiteInstructions = () => {
   );
 };
 
-export default SiteInstructions;
+export default Instructions;
