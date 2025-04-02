@@ -17,7 +17,7 @@ const generateStar = () => new Promise<Star>((resolve) => {
     y: Math.random() * window.innerHeight / window.innerHeight,
     x: Math.random() * window.innerWidth / window.innerWidth,
     opacity: Math.floor(Math.random() * 40 + 40),
-    size: 0.2 + Math.random() * 1.3,
+    size: Math.random() > 0.2 ? (0.2 + Math.random() * 0.3) : (0.5 + Math.random() * 1.3),
     delay: 100 + Math.random() * 400,
     duration: 0.5 + Math.random() * 9.5,
   })
