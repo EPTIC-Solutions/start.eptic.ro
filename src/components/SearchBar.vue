@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useEngineStore } from '@/stores/engine'
+import { useEngineStore } from '@/stores/engine';
 import isMac from '@/utils/isMac';
-import { storeToRefs } from 'pinia'
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { storeToRefs } from 'pinia';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 
 const engineStore = useEngineStore()
 const { currentEngine, engines } = storeToRefs(engineStore)
@@ -15,8 +15,7 @@ watch(currentEngine, () => {
 })
 
 const onKeyDown = (event: KeyboardEvent) => {
-  if ((isMac() && !event.metaKey) || (!isMac() && !event.ctrlKey)) return
-  if (event.key !== 'c') return
+  if ((isMac() && !event.ctrlKey) || (!isMac() && !event.altKey) || event.code !== 'KeyC') return
 
   search.value = ''
 }
@@ -36,7 +35,7 @@ onUnmounted(() => {
       event.preventDefault()
       engineStore.$doSearch(search)
     }
-      ">
+    ">
       <div id="input">
         <input autofocus="true" type="text" ref="inputEl" v-model="search"
           :placeholder="`Search ${engines[currentEngine].name}`" autocomplete="off" class="text-4xl sm:text-6xl" />

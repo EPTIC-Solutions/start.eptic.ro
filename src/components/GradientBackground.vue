@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, onUnmounted, ref, watch } from 'vue'
-import StarsBackground from './StarsBackground.vue'
+import { computed, onUnmounted, ref, watch } from 'vue';
+import StarsBackground from './StarsBackground.vue';
 
 const getTime = () => {
-  return new Date()
+  return new Date();
 }
 
 const time = ref(getTime())
@@ -60,31 +60,31 @@ onUnmounted(() => {
 
 <style scoped>
 .hour-0 {
-  background: #00000c;
+  background: #000101;
 }
 
 .hour-1 {
-  background: linear-gradient(to bottom, #020111 85%, #191621 100%);
+  background: linear-gradient(to bottom, #000101 85%, #08070a 100%);
 }
 
 .hour-2 {
-  background: linear-gradient(to bottom, #020111 60%, #20202c 100%);
+  background: linear-gradient(to bottom, #000101 85%, #08070a 100%);
 }
 
 .hour-3 {
-  background: linear-gradient(to bottom, #020111 10%, #3a3a52 100%);
+  background: linear-gradient(to bottom, #000101 85%, #08070a 100%);
 }
 
 .hour-4 {
-  background: linear-gradient(to bottom, #20202c 0%, #515175 100%);
+  background: linear-gradient(to bottom, #000101 50%, #020505 85%, #0f1616 100%);
 }
 
 .hour-5 {
-  background: linear-gradient(to bottom, #40405c 0%, #6f71aa 80%, #8a76ab 100%);
+  background: linear-gradient(to bottom, #000101 50%, #070f0f 85%, #0f1616 100%);
 }
 
 .hour-6 {
-  background: linear-gradient(to bottom, #4a4969 0%, #7072ab 50%, #cd82a0 100%);
+  background: linear-gradient(to bottom, #4a4969 0%, #7072ab 50%, #cda482 100%);
 }
 
 .hour-7 {
@@ -157,6 +157,6 @@ onUnmounted(() => {
 }
 
 .hour-23 {
-  background: linear-gradient(to bottom, #00000c 80%, #150800 100%);
+  background: linear-gradient(to bottom, #000101 60%, #030100 100%);
 }
 </style>
