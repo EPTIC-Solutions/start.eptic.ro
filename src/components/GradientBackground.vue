@@ -3,7 +3,9 @@ import { computed, onUnmounted, ref, watch } from 'vue';
 import StarsBackground from './StarsBackground.vue';
 
 const getTime = () => {
-  return new Date();
+  const date = new Date();
+  date.setHours(0, 0, 0, 0)
+  return date;
 }
 
 const time = ref(getTime())
@@ -16,27 +18,14 @@ const nextUpdateDate = computed(() => {
   return nextUpdateDate
 })
 
-const STARS_COUNT = {
-  22: 1000 + Math.random() * 500, // 1000-1500 stars at 22:00
-  23: 2000 + Math.random() * 1000, // 2000-3000 stars at 23:00
-  0: 5000 + Math.random() * 5000, // 5000-10_000 stars at 00:00
-  1: 5000 + Math.random() * 10000, // 5000-15_000 stars at 01:00
-  2: 5000 + Math.random() * 5000, // 5000-10_000 stars at 02:00
-  3: 5000 + Math.random() * 5000, // 5000-10_000 stars at 03:00
-  4: 2000 + Math.random() * 1000, // 2000-3000 stars at 04:00
-  5: 1000 + Math.random() * 500 // 1000-1500 stars at 05:00
-}
-
-const starsCount = computed<number>(() => {
-  // @ts-ignore
-  return STARS_COUNT[time.value.getHours()]
-})
-
 const timeout = ref<ReturnType<typeof setTimeout> | undefined>(undefined)
 
 watch(
   nextUpdateDate,
   () => {
+    if (timeout.value) {
+      clearTimeout(timeout.value)
+    }
     timeout.value = setTimeout(() => {
       time.value = getTime()
     }, nextUpdateDate.value.getTime() - time.value.getTime())
@@ -53,7 +42,7 @@ onUnmounted(() => {
   <div className="z-0">
     <div :class="`hour-${time.getHours()} absolute inset-0`" />
     <template v-if="time.getHours() >= 22 || time.getHours() <= 5">
-      <StarsBackground :stars="starsCount" />
+      <StarsBackground />
     </template>
   </div>
 </template>
